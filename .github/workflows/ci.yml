@@ -9,7 +9,7 @@ jobs:
       redis: {image: 'redis:7-alpine', ports: ['6379:6379']}
     env: {DATABASE_URL: 'postgresql://househelp:househelp@localhost:5432/househelp_test', REDIS_URL: 'redis://localhost:6379', JWT_SECRET: 'ci-jwt-secret-with-at-least-thirty-two-chars', REFRESH_TOKEN_SECRET: 'ci-refresh-secret-with-at-least-thirty-two', OTP_PEPPER: 'ci-otp-pepper'}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with: {node-version: 22, cache: npm}
       - run: npm ci
