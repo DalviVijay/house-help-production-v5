@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: house-help-api
+    runtime: docker
+    dockerfilePath: ./infrastructure/docker/backend.prod.Dockerfile
+    healthCheckPath: /health/ready
+    autoDeploy: false
+    envVars:
+      - {key: NODE_ENV, value: production}
+      - {key: DATABASE_URL, fromDatabase: {name: house-help-db, property: connectionString}}
+      - {key: REDIS_URL, fromService: {type: redis, name: house-help-redis, property: connectionString}}
+      - {key: JWT_SECRET, sync: false}
+      - {key: REFRESH_TOKEN_SECRET, sync: false}
+      - {key: OTP_PEPPER, sync: false}
+  - type: redis
+    name: house-help-redis
+    plan: starter
+    ipAllowList: []
+databases:
+  - name: house-help-db
+    plan: basic-256mb
+    databaseName: househelp
+    user: househelp

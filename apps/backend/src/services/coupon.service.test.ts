@@ -1,0 +1,1 @@
+import{describe,it,expect}from'vitest';import{discount}from'./coupon.service.js';describe('coupon discount',()=>{it('caps percentage discount',()=>expect(discount({discountType:'PERCENTAGE',discountValue:20,maximumDiscount:50},500)).toBe(50));it('uses fixed discount',()=>expect(discount({discountType:'FIXED',discountValue:100,maximumDiscount:null},500)).toBe(100))});

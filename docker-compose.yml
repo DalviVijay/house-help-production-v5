@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment: {POSTGRES_USER: househelp, POSTGRES_PASSWORD: househelp, POSTGRES_DB: househelp}
+    ports: ["5432:5432"]
+    volumes: [postgres_data:/var/lib/postgresql/data]
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+  backend:
+    build: {context: ., dockerfile: infrastructure/backend.Dockerfile}
+    env_file: .env
+    ports: ["4000:4000"]
+    depends_on: [postgres, redis]
+  admin:
+    build: {context: ., dockerfile: infrastructure/admin.Dockerfile}
+    ports: ["3000:3000"]
+    depends_on: [backend]
+volumes: {postgres_data: {}}

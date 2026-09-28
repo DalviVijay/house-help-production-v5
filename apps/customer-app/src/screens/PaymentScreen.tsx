@@ -1,0 +1,10 @@
+import React, { useState } from 'react';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
+
+type Props = { bookingNumber: string; displayTotal: string; onCreateOrder: () => Promise<void> };
+export function PaymentScreen({ bookingNumber, displayTotal, onCreateOrder }: Props) {
+  const [loading, setLoading] = useState(false);
+  const pay = async () => { setLoading(true); try { await onCreateOrder(); } finally { setLoading(false); } };
+  return <View style={s.page}><Text style={s.brand}>HOUSE HELP</Text><Text style={s.kicker}>SECURE PAYMENT</Text><Text style={s.title}>पेमेंट पूर्ण करा</Text><View style={s.card}><Text style={s.label}>Booking</Text><Text style={s.value}>{bookingNumber}</Text><View style={s.rule}/><Text style={s.label}>Payable total</Text><Text style={s.total}>{displayTotal}</Text><Text style={s.note}>UPI · Cards · Net banking · Wallet</Text></View><Pressable disabled={loading} accessibilityRole="button" style={s.button} onPress={pay}><Text style={s.buttonText}>{loading ? 'कृपया थांबा…' : 'सुरक्षित पेमेंट करा'}</Text></Pressable><Text style={s.security}>Payment success is verified securely by the HOUSE HELP backend.</Text></View>;
+}
+const s=StyleSheet.create({page:{flex:1,padding:20,backgroundColor:'#F8FAF9'},brand:{marginTop:20,color:'#176B5B',fontWeight:'900',fontSize:18},kicker:{marginTop:34,color:'#176B5B',fontWeight:'800',fontSize:11,letterSpacing:1.5},title:{fontSize:29,fontWeight:'900',marginTop:7},card:{marginTop:24,backgroundColor:'#FFF',borderWidth:1,borderColor:'#DCE5E1',borderRadius:18,padding:20},label:{color:'#63716D',fontSize:13},value:{fontWeight:'800',fontSize:17,marginTop:6},rule:{height:1,backgroundColor:'#E4EAE7',marginVertical:20},total:{fontSize:30,fontWeight:'900',marginTop:6,color:'#176B5B'},note:{marginTop:18,color:'#63716D'},button:{height:56,borderRadius:14,backgroundColor:'#176B5B',alignItems:'center',justifyContent:'center',marginTop:24},buttonText:{color:'#FFF',fontSize:16,fontWeight:'900'},security:{color:'#63716D',fontSize:12,lineHeight:18,textAlign:'center',marginTop:14}});

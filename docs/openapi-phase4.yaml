@@ -1,0 +1,32 @@
+openapi: 3.1.0
+info: {title: HOUSE HELP Provider API, version: 0.4.0}
+paths:
+  /api/providers/me:
+    get: {summary: Load provider profile and verification state}
+    patch: {summary: Update provider profile and working areas}
+  /api/providers/me/services:
+    put: {summary: Replace provider service selection}
+  /api/providers/me/availability:
+    put: {summary: Replace weekly availability}
+  /api/providers/me/uploads:
+    post: {summary: Create private five-minute upload authorization}
+  /api/providers/me/documents:
+    post: {summary: Submit uploaded document for review}
+  /api/providers/me/payout:
+    put: {summary: Encrypt and save payout details}
+  /api/providers/me/dashboard:
+    get: {summary: Load jobs, rating and earnings summary}
+  /api/providers/me/earnings:
+    get: {summary: Load provider earnings history}
+  /api/providers/bookings/{id}/accept:
+    post: {summary: Accept an assigned booking}
+  /api/providers/bookings/{id}/reject:
+    post: {summary: Reject an assigned booking}
+  /api/providers/bookings/{id}/status:
+    patch: {summary: Apply a guarded provider job transition}
+  /api/admin/providers:
+    get: {summary: List providers for operations review}
+  /api/admin/providers/{id}/verification:
+    patch: {summary: Verify, reject, or suspend a provider}
+  /api/admin/providers/{providerId}/documents/{documentId}:
+    patch: {summary: Verify or reject a provider document}

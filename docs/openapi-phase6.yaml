@@ -1,0 +1,14 @@
+openapi: 3.1.0
+info: {title: HOUSE HELP Admin API, version: 0.6.0}
+paths:
+  /api/admin/analytics/dashboard: {get: {summary: Operational KPI dashboard}}
+  /api/admin/analytics/trends: {get: {summary: Daily booking and revenue trends}}
+  /api/admin/analytics/finance: {get: {summary: Finance summary by date range}}
+  /api/admin/analytics/finance.csv: {get: {summary: Download finance CSV}}
+  /api/coupons/validate: {post: {summary: Validate coupon against amount}}
+  /api/coupons/admin: {get: {summary: List coupons}, post: {summary: Create coupon}}
+  /api/support: {post: {summary: Create support ticket}}
+  /api/support/mine: {get: {summary: List customer tickets}}
+  /api/support/{id}/messages: {post: {summary: Reply to ticket}}
+  /api/support/admin/all: {get: {summary: List support queue}}
+  /api/admin/commission: {get: {summary: Commission history}, post: {summary: Schedule commission}}

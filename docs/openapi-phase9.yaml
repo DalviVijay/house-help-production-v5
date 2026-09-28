@@ -1,0 +1,10 @@
+openapi: 3.1.0
+info: {title: HOUSE HELP Growth API, version: 9.0.0}
+paths:
+  /api/growth/plans: {get: {summary: List subscription plans}}
+  /api/growth/dashboard: {get: {summary: Customer wallet, loyalty, subscriptions and referrals}}
+  /api/growth/subscriptions: {post: {summary: Start subscription}}
+  /api/growth/recurring: {post: {summary: Create recurring booking}}
+  /api/growth/referrals/code: {post: {summary: Create referral code}}
+  /api/growth/referrals/apply: {post: {summary: Apply referral code}}
+  /api/growth/incentives: {get: {summary: Provider incentives}}

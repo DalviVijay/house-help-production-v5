@@ -1,0 +1,22 @@
+name: CI
+on: {push: {branches: ['main']}, pull_request: {}}
+permissions: {contents: read}
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    services:
+      postgres: {image: 'postgres:16-alpine', env: {POSTGRES_USER: househelp, POSTGRES_PASSWORD: househelp, POSTGRES_DB: househelp_test}, ports: ['5432:5432'], options: "--health-cmd 'pg_isready -U househelp' --health-interval 10s --health-timeout 5s --health-retries 5"}
+      redis: {image: 'redis:7-alpine', ports: ['6379:6379']}
+    env: {DATABASE_URL: 'postgresql://househelp:househelp@localhost:5432/househelp_test', REDIS_URL: 'redis://localhost:6379', JWT_SECRET: 'ci-jwt-secret-with-at-least-thirty-two-chars', REFRESH_TOKEN_SECRET: 'ci-refresh-secret-with-at-least-thirty-two', OTP_PEPPER: 'ci-otp-pepper'}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22, cache: npm}
+      - run: npm ci
+      - run: npm run prisma:generate -w @house-help/backend
+      - run: npx prisma db push --skip-generate --schema apps/backend/prisma/schema.prisma
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run test:security
+      - run: npm run test:coverage -w @house-help/backend
+      - run: npm run build --workspaces --if-present

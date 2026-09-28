@@ -1,0 +1,1 @@
+export const SERVICE_AREAS=['Kopar Khairane','Vashi','Sanpada','Ghansoli','Rabale','Airoli','Turbhe','Juinagar','Nerul'] as const;export const normalizeArea=(v:string)=>SERVICE_AREAS.find(x=>x.toLowerCase()===v.trim().toLowerCase());

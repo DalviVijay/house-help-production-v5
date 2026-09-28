@@ -1,0 +1,1 @@
+import{z}from'zod';export const createPaymentSchema=z.object({bookingId:z.string().min(1)});export const verifyPaymentSchema=z.object({bookingId:z.string(),gatewayOrderId:z.string(),gatewayPaymentId:z.string(),signature:z.string().regex(/^[a-f0-9]{64}$/i)});

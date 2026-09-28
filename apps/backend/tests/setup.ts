@@ -1,0 +1,1 @@
+process.env.NODE_ENV='test';process.env.DATABASE_URL??='postgresql://househelp:househelp@localhost:5432/househelp_test';process.env.JWT_SECRET??='test-jwt-secret-that-is-at-least-32-characters';process.env.REFRESH_TOKEN_SECRET??='test-refresh-secret-that-is-at-least-32-characters';process.env.OTP_PEPPER??='test-otp-pepper';process.env.CORS_ORIGINS??='http://localhost:3000';

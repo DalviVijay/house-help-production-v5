@@ -1,0 +1,40 @@
+name: Mobile Release Candidates
+on:
+  workflow_dispatch:
+    inputs:
+      app: {description: 'App to build', required: true, type: choice, options: [customer-app, provider-app, both]}
+      platform: {description: 'Platform', required: true, type: choice, options: [android, ios, all]}
+permissions: {contents: read}
+concurrency: {group: 'mobile-${{ inputs.app }}-${{ inputs.platform }}', cancel-in-progress: false}
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22, cache: npm}
+      - run: npm ci
+      - run: node scripts/verify-mobile-release.mjs customer-app
+      - run: node scripts/verify-mobile-release.mjs provider-app
+  build:
+    needs: validate
+    runs-on: ubuntu-latest
+    environment: mobile-production
+    strategy:
+      fail-fast: false
+      matrix:
+        app: ${{ inputs.app == 'both' && fromJSON('["customer-app","provider-app"]') || fromJSON(format('["{0}"]', inputs.app)) }}
+    defaults: {run: {working-directory: 'apps/${{ matrix.app }}'}}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22, cache: npm}
+      - run: npm ci
+        working-directory: .
+      - uses: expo/expo-github-action@v8
+        with: {eas-version: latest, token: '${{ secrets.EXPO_TOKEN }}'}
+      - run: eas build --non-interactive --profile production --platform '${{ inputs.platform }}'
+        env:
+          EXPO_PUBLIC_API_URL: ${{ vars.EXPO_PUBLIC_API_URL }}
+          EXPO_PUBLIC_CUSTOMER_EAS_PROJECT_ID: ${{ vars.EXPO_PUBLIC_CUSTOMER_EAS_PROJECT_ID }}
+          EXPO_PUBLIC_PROVIDER_EAS_PROJECT_ID: ${{ vars.EXPO_PUBLIC_PROVIDER_EAS_PROJECT_ID }}

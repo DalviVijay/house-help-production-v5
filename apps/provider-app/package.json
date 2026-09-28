@@ -1,0 +1,41 @@
+{
+  "name": "@house-help/provider-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "expo start",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "typecheck": "tsc --noEmit",
+    "start": "expo start",
+    "prebuild:clean": "expo prebuild --clean",
+    "release:check": "node ../../scripts/verify-mobile-release.mjs provider-app",
+    "build:android": "eas build --platform android --profile production",
+    "build:ios": "eas build --platform ios --profile production",
+    "build:all": "eas build --platform all --profile production",
+    "submit:android": "eas submit --platform android --profile production",
+    "submit:ios": "eas submit --platform ios --profile production"
+  },
+  "dependencies": {
+    "@react-native-community/netinfo": "12.0.1",
+    "expo": "^57.0.25",
+    "expo-build-properties": "~57.0.22",
+    "expo-constants": "~57.0.19",
+    "expo-device": "~57.0.2",
+    "expo-location": "~57.0.20",
+    "expo-notifications": "~57.0.21",
+    "expo-secure-store": "~57.0.4",
+    "expo-splash-screen": "~57.0.3",
+    "expo-status-bar": "~57.0.1",
+    "expo-system-ui": "~57.0.4",
+    "expo-updates": "~57.0.23",
+    "react": "19.2.3",
+    "react-native": "0.86.3",
+    "react-native-maps": "1.27.2",
+    "socket.io-client": "^4.8.1"
+  },
+  "devDependencies": {
+    "@types/react": "~19.2.4",
+    "typescript": "~6.0.3"
+  }
+}

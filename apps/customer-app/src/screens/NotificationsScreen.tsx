@@ -1,0 +1,4 @@
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+export function NotificationsScreen(){return <View style={s.page}><Text style={s.title}>सूचना</Text>{[['✓','पेमेंट यशस्वी','तुमच्या booking चे payment प्राप्त झाले.'],['🧹','बुकिंग निश्चित','Provider assignment सुरू आहे.']].map(([icon,title,body])=><View style={s.item} key={title}><Text style={s.icon}>{icon}</Text><View><Text style={s.itemTitle}>{title}</Text><Text style={s.body}>{body}</Text></View></View>)}</View>}
+const s=StyleSheet.create({page:{flex:1,padding:20,backgroundColor:'#F8FAF9'},title:{fontSize:29,fontWeight:'900',marginTop:22,marginBottom:20},item:{flexDirection:'row',gap:14,backgroundColor:'#FFF',padding:16,borderRadius:14,borderWidth:1,borderColor:'#DCE5E1',marginBottom:10},icon:{fontSize:22,color:'#176B5B'},itemTitle:{fontWeight:'800',fontSize:16},body:{color:'#63716D',marginTop:5,maxWidth:280}});

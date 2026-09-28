@@ -1,0 +1,5 @@
+import type {Request,Response,NextFunction} from 'express'; import {jwtVerify} from 'jose'; import {env} from '../config/env.js'; import {fail} from '../utils/api.js';
+export type Role='CUSTOMER'|'PROVIDER'|'SUPER_ADMIN'|'ADMIN'|'OPERATIONS_MANAGER'|'SUPPORT_AGENT'|'FINANCE_MANAGER';
+declare global{namespace Express{interface Request{actor?:{userId:string;role:Role}}}}
+export async function authenticate(req:Request,res:Response,next:NextFunction){const token=req.header('authorization')?.replace(/^Bearer /,'');if(!token)return void fail(res,401,'Authentication required','AUTH_REQUIRED');try{const {payload}=await jwtVerify(token,new TextEncoder().encode(env.JWT_SECRET));req.actor={userId:String(payload.sub),role:payload.role as Role};next();}catch{return void fail(res,401,'Invalid or expired token','INVALID_TOKEN')}}
+export const authorize=(...roles:Role[])=>(req:Request,res:Response,next:NextFunction)=>req.actor&&roles.includes(req.actor.role)?next():void fail(res,403,'Insufficient permission','FORBIDDEN');

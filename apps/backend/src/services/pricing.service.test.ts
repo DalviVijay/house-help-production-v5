@@ -1,0 +1,1 @@
+import{describe,it,expect}from'vitest';import{calculatePrice}from'./pricing.service.js';describe('pricing',()=>{it('uses backend tiers',()=>expect(calculatePrice({mode:'TIERED',tiers:[{quantity:2,price:349}]},2)).toBe(349));it('rejects missing tier',()=>expect(()=>calculatePrice({mode:'TIERED',tiers:[]},2)).toThrow('PRICE_NOT_CONFIGURED'))});

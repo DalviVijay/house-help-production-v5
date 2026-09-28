@@ -1,0 +1,1 @@
+import{RazorpayGateway}from'./razorpay.gateway.js';export const paymentGateway=new RazorpayGateway();

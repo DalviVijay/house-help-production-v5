@@ -1,0 +1,1 @@
+import{Router}from'express';import{registry}from'../observability/metrics.js';import{env}from'../config/env.js';export const metricsRouter=Router();metricsRouter.get('/',async(req,res)=>{if(!env.METRICS_TOKEN||req.header('authorization')!==`Bearer ${env.METRICS_TOKEN}`)return res.status(404).end();res.type(registry.contentType).send(await registry.metrics())})

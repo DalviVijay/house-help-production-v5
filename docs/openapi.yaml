@@ -1,0 +1,43 @@
+openapi: 3.1.0
+info: {title: HOUSE HELP API, version: 0.1.0}
+servers: [{url: http://localhost:4000}]
+paths:
+  /health:
+    get:
+      responses: {'200': {description: Healthy}}
+  /api/auth/register:
+    post:
+      summary: Register a customer or provider
+      responses: {'201': {description: Registered}, '400': {description: Validation error}}
+  /api/auth/login:
+    post:
+      summary: Password login
+      responses: {'200': {description: Authenticated}, '401': {description: Invalid credentials}}
+  /api/auth/send-otp:
+    post:
+      summary: Request mobile OTP
+      responses: {'200': {description: OTP requested}, '429': {description: Rate limited}}
+  /api/auth/verify-otp:
+    post:
+      summary: Verify OTP and create session
+      responses: {'200': {description: Authenticated}, '401': {description: Invalid OTP}}
+
+  /api/payments/create:
+    post:
+      summary: Create gateway order from server booking total
+      security: [{bearerAuth: []}]
+      responses: {'201': {description: Order created}}
+  /api/payments/verify:
+    post:
+      summary: Verify gateway checkout signature
+      security: [{bearerAuth: []}]
+      responses: {'200': {description: Payment verified}}
+  /api/payments/webhook:
+    post:
+      summary: Verify and process raw gateway webhook
+      responses: {'200': {description: Event processed}}
+  /api/notifications:
+    get:
+      summary: List current user notifications
+      security: [{bearerAuth: []}]
+      responses: {'200': {description: Notifications}}

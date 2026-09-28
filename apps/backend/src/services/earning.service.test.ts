@@ -1,0 +1,1 @@
+import{describe,it,expect}from'vitest';import{splitCommission}from'./earning.service.js';describe('commission',()=>{it('splits 80/20',()=>expect(splitCommission(500,80)).toEqual({providerAmount:400,platformAmount:100}));it('rejects invalid percentage',()=>expect(()=>splitCommission(500,101)).toThrow('INVALID_COMMISSION'))});

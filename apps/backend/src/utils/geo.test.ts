@@ -1,0 +1,1 @@
+import{describe,it,expect}from'vitest';import{haversineMeters}from'./geo.js';describe('haversine',()=>{it('returns zero for same point',()=>expect(haversineMeters({lat:19.1,lng:73.0},{lat:19.1,lng:73.0})).toBe(0));it('finds nearby distance',()=>expect(haversineMeters({lat:19.1036,lng:73.0100},{lat:19.1136,lng:73.0100})).toBeGreaterThan(1000))});

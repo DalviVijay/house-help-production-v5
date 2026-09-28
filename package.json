@@ -1,0 +1,33 @@
+{
+  "name": "house-help",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "npm@10.8.2",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @house-help/backend",
+    "build": "npm run build --workspaces --if-present",
+    "test": "node scripts/verify.mjs && npm run prisma:generate -w @house-help/backend && npm run test -w @house-help/backend",
+    "lint": "node scripts/verify.mjs",
+    "typecheck": "npm run prisma:generate -w @house-help/backend && npm run typecheck --workspaces --if-present",
+    "format": "prettier --write .",
+    "test:security": "npm run test:security -w @house-help/backend",
+    "test:phase7": "node scripts/verify.mjs && npm run test -w @house-help/backend",
+    "quality:check": "npm run typecheck && npm test && npm run test:security && npm run test:coverage -w @house-help/backend && npm run build",
+    "release:check": "npm run quality:check && node scripts/verify-mobile-release.mjs customer-app && node scripts/verify-mobile-release.mjs provider-app && node scripts/verify-phase9.mjs",
+    "store:gate": "node scripts/store-readiness-gate.mjs"
+  },
+  "engines": {
+    "node": ">=22 <23",
+    "npm": ">=10 <12"
+  },
+  "overrides": {
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "deepmerge-ts": "8.0.1",
+    "uuid": "11.1.1"
+  }
+}
