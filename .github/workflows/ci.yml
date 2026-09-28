@@ -10,7 +10,7 @@ jobs:
     env: {DATABASE_URL: 'postgresql://househelp:househelp@localhost:5432/househelp_test', REDIS_URL: 'redis://localhost:6379', JWT_SECRET: 'ci-jwt-secret-with-at-least-thirty-two-chars', REFRESH_TOKEN_SECRET: 'ci-refresh-secret-with-at-least-thirty-two', OTP_PEPPER: 'ci-otp-pepper'}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with: {node-version: 22, cache: npm}
       - run: npm ci
       - run: npm run prisma:generate -w @house-help/backend
